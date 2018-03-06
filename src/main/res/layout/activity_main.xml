@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="mkdg.com.dbworker.MainActivity">
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/show_user_list"
+        android:text="@string/show_user_list"
+        android:gravity="center_horizontal"
+        android:layout_marginLeft="15dp"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_user"
+        android:text="@string/edit_user"
+        android:gravity="center_horizontal"
+        android:layout_toEndOf="@+id/show_user_list"
+        android:layout_marginLeft="85dp"/>
+
+    <Button
+        android:id="@+id/drop_user_table"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/show_user_list"
+        android:layout_alignLeft="@+id/show_user_list"
+        android:text="@string/drop_table"/>
+
+
+</RelativeLayout>

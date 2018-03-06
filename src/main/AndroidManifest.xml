@@ -16,7 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".list_item"></activity>
+        <activity android:name=".ListItem" />
+        <activity android:name=".User_list" />
+        <activity android:name=".EditUser" />
+        <activity android:name=".Empty_list_item"></activity>
     </application>
 
 </manifest>

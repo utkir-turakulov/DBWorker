@@ -3,7 +3,7 @@ package mkdg.com.dbworker;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class list_item extends AppCompatActivity {
+public class ListItem extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

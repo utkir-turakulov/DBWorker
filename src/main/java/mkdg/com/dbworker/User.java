@@ -1,60 +1,64 @@
 package mkdg.com.dbworker;
 
+import android.annotation.SuppressLint;
+import android.database.sqlite.SQLiteDatabase;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class User {
-    private String name;
+    /*private String name;
     private String fatherName;
-    private String surname;
+    private String surname;*/
+    private String FIO;
     private Date dateOfBirth;
     private String birthPlace;
-    private String sex;
+    private String sex = "sex";
 
-    public void setName(String name){
-        this.name = name;
+    public User() {
+
     }
 
-    public String getName(){
-        return name;
+    public User(String FIO, String dateOfBirth, String birthPlace, String sex) throws ParseException {
+        this.FIO = FIO;
+        @SuppressLint("SimpleDateFormat")
+        DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+        this.dateOfBirth = format.parse(dateOfBirth);
+        this.birthPlace = birthPlace;
+        this.sex = sex;
     }
 
-    public void setFatherName(String fatherName){
-        this.fatherName = fatherName;
+    public String getFIO() {
+        return FIO;
     }
 
-    public String getFatherName(){
-        return fatherName;
-    }
-
-    public void setSurname(String surname){
-        this.surname = surname;
-    }
-
-    public String getSurname(){
-        return surname;
+    public void setFIO(String fio) {
+        this.FIO = fio;
     }
 
     public void setDateOfBirth(String dateOfBirth) throws ParseException {
-        DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        @SuppressLint("SimpleDateFormat")
+        DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
         this.dateOfBirth = format.parse(dateOfBirth);
     }
 
-    public String getDateOfBirth(){
-        return dateOfBirth.toString();
+    public String getDateOfBirth() {
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        return dateFormat.format(dateOfBirth);
     }
 
-    public void setBirthPlace(String birthPlace){
+    public void setBirthPlace(String birthPlace) {
         this.birthPlace = birthPlace;
     }
 
-    public String getBirthPlace(){
+    public String getBirthPlace() {
         return birthPlace;
     }
 
-    public void setSex(String sex){
+    public void setSex(String sex) {
         this.sex = sex;
     }
 

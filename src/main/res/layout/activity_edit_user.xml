@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="mkdg.com.dbworker.EditUser">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fio_field"
+        android:id="@+id/fio_text"
+        android:paddingTop="25dp"
+        android:paddingLeft="5dp"
+        />
+
+    <EditText
+        android:id="@+id/FIO"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/birth_place_editor"
+        android:inputType="text" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/birth_date_field"
+        android:id="@+id/birth_text"
+        android:layout_below="@+id/fio_text"
+        android:paddingTop="55dp"
+        android:paddingLeft="5dp"
+        />
+
+    <EditText
+        android:id="@+id/date_of_birth_editor"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/birth_text"
+        android:layout_below="@+id/birthPlace_text"
+        android:layout_marginLeft="80dp"
+        android:layout_toEndOf="@+id/birth_text"
+        android:inputType="date" />
+
+    <TextView
+        android:id="@+id/birthPlace_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/birth_place_field"
+        android:layout_below="@+id/birth_text"
+        android:paddingTop="55dp"
+        android:paddingLeft="5dp"
+        />
+
+    <EditText
+        android:id="@+id/birth_place_editor"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+
+        android:layout_above="@+id/date_of_birth_editor"
+        android:layout_alignStart="@+id/date_of_birth_editor"
+        android:inputType="text" />
+
+
+    <TextView
+        android:id="@+id/sex_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sex_selector"
+        android:layout_below="@+id/birthPlace_text"
+        android:paddingTop="55dp"
+        android:paddingLeft="5dp"/>
+
+    <EditText
+        android:id="@+id/sex_field"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/date_of_birth_editor"
+        android:layout_below="@+id/date_of_birth_editor"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/save_user_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/save_user_button"
+        android:layout_marginTop="205dp"
+        android:layout_centerHorizontal="true"/>
+
+
+
+    <Button
+        android:id="@+id/test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="test"
+        android:layout_marginTop="205dp"
+        />
+
+
+</RelativeLayout>

@@ -39,13 +39,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
         handler = new DatabaseHandler(getApplicationContext());
         switch (view.getId()) {
             case R.id.show_user_list: {
-                intent = new Intent(this, User_list.class);
+                intent = new Intent(this, UserListActivity.class);
                 startActivity(intent);
                 break;
             }
 
             case R.id.edit_user: {
-                intent = new Intent(this, EditUser.class);
+                intent = new Intent(this, AddUserActivity.class);
                 startActivity(intent);
                 break;
             }

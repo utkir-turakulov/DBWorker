@@ -1,6 +1,7 @@
 package mkdg.com.dbworker;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,7 +10,7 @@ import android.widget.Toast;
 
 import java.text.ParseException;
 
-public class EditUser extends Activity implements View.OnClickListener {
+public class AddUserActivity extends Activity implements View.OnClickListener {
 
     Button save_button;
     User user;
@@ -22,7 +23,7 @@ public class EditUser extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_user);
+        setContentView(R.layout.activity_add_user);
         save_button = findViewById(R.id.save_user_button);
         fio = findViewById(R.id.FIO);
         birthDate = findViewById(R.id.date_of_birth_editor);
@@ -53,7 +54,6 @@ public class EditUser extends Activity implements View.OnClickListener {
                 Toast.makeText(getApplicationContext(), "User saved", Toast.LENGTH_SHORT).show();
                 break;
             }
-
             case R.id.test: {
                 break;
             }

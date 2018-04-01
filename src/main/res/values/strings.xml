@@ -3,8 +3,8 @@
     <string name="edit_user">Edit user</string>
     <string name="show_user_list">Show user list</string>
     <string name="fio_field">ФИО</string>
-    <string name="birth_date_field">\tДата\n рождения</string>
-    <string name="birth_place_field"><p>Место</p>\n рождения</string>
+    <string name="birth_date_field">Дата\nрождения</string>
+    <string name="birth_place_field">Место\nрождения</string>
     <string name="sex_selector">Пол</string>
     <string name="save_user_button">Save user</string>
     <string name="drop_table">Drop table</string>

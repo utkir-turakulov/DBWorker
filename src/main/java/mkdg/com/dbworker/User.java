@@ -9,13 +9,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class User {
-    /*private String name;
-    private String fatherName;
-    private String surname;*/
+
     private String FIO;
     private Date dateOfBirth;
     private String birthPlace;
     private String sex = "sex";
+    private int id;
 
     public User() {
 
@@ -64,5 +63,13 @@ public class User {
 
     public String getSex() {
         return sex;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 }

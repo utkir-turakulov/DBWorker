@@ -6,11 +6,19 @@ import java.util.List;
 
 public interface IDatabaseHandler {
 
-    public void insertUser(User user);
-    public List<User> getUser();
-    public void editUser(User user);
-    public List<User> sortBy(String filterType);
-    public void yearFilter();
-    public void clearUserList();
-    public void sexFilter();
+    void insertUser(User user);
+
+    List<User> getUsers();
+
+    void editUser(User new_user, User old_user);
+
+    List<User> sortBy(String filterType);
+
+    void yearFilter();
+
+    void clearUserList();
+
+    void deleteUser(User user);
+
+    void sexFilter();
 }

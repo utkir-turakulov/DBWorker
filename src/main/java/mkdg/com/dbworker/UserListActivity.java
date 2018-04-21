@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.SQLException;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -39,7 +40,6 @@ public class UserListActivity extends Activity implements View.OnClickListener {
         userList = findViewById(R.id.list_item);
         userList.invalidateViews();
         userList.refreshDrawableState();
-
 
         userList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -123,7 +123,11 @@ public class UserListActivity extends Activity implements View.OnClickListener {
     protected void onResume() {
         super.onResume();
         handler = new DatabaseHandler(getApplicationContext());
-        fillList(handler.getUsers());
+        try {
+            fillList(handler.getUsers());
+        } catch (SQLException ex) {
+            Toast.makeText(getApplicationContext(), "Не удалось получить пользователей!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -154,23 +158,32 @@ public class UserListActivity extends Activity implements View.OnClickListener {
                         selected = i;
                     }
                 }
-                    switch (selected) {
-                        case 0:
-//                            Toast.makeText(getApplicationContext(),"Выбрана кнопка: "+actions[which],Toast.LENGTH_LONG).show();
-                            intent = new Intent(getApplicationContext(), EditUserActivity.class);
-                            intent.putExtra("fio", user.getFIO());
-                            intent.putExtra("birthPlace", user.getBirthPlace());
-                            intent.putExtra("birthDate", user.getDateOfBirth());
-                            intent.putExtra("sex", user.getSex());
-                            startActivity(intent);
-                            return;
+                switch (selected) {
+                    case 0:
+                        intent = new Intent(getApplicationContext(), AddUserActivity.class);
+                        intent.putExtra("fio", user.getFIO());
+                        intent.putExtra("birthPlace", user.getBirthPlace());
+                        intent.putExtra("birthDate", user.getDateOfBirth());
+                        intent.putExtra("sex", user.getSex());
+                        intent.putExtra("task", "edit");
+                        startActivity(intent);
+                        return;
 
-                        case 1:
+                    case 1:
+                        try {
                             handler.deleteUser(user);
+                            Toast.makeText(getApplicationContext(), "Пользователь удален!", Toast.LENGTH_SHORT).show();
+                        } catch (SQLException ex) {
+                            Toast.makeText(getApplicationContext(), "Не удалось удалить пользователя!", Toast.LENGTH_SHORT).show();
+                        }
+                        try {
                             fillList(handler.getUsers());
-                            return;
-                    }
+                        } catch (SQLException ex) {
+                            Toast.makeText(getApplicationContext(), "Не удалить получить список пользователей!", Toast.LENGTH_SHORT).show();
+                        }
+                        return;
                 }
+            }
 
         });
         dialog.setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
@@ -189,14 +202,11 @@ public class UserListActivity extends Activity implements View.OnClickListener {
                 switch (which) {
                     case 0:
                         items[0] = true;
-                        Toast.makeText(getApplicationContext(), "Выбрано действие: " + actions[which], Toast.LENGTH_LONG).show();
                         break;
                     case 1:
                         items[1] = true;
-                        Toast.makeText(getApplicationContext(), "Выбрано действие: " + actions[which], Toast.LENGTH_LONG).show();
                         break;
                 }
-
             }
         });
         dialog.create().show();

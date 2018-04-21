@@ -41,7 +41,8 @@
         android:layout_below="@+id/birthPlace_text"
         android:layout_marginLeft="80dp"
         android:layout_toEndOf="@+id/birth_text"
-        android:inputType="date" />
+        android:inputType="date"
+        android:onClick="onClick"/>
 
     <TextView
         android:id="@+id/birthPlace_text"
@@ -89,16 +90,5 @@
         android:text="@string/save_user_button"
         android:layout_marginTop="205dp"
         android:layout_centerHorizontal="true"/>
-
-
-
-    <Button
-        android:id="@+id/test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="test"
-        android:layout_marginTop="205dp"
-        />
-
 
 </RelativeLayout>

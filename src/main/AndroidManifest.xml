@@ -21,7 +21,6 @@
         <activity android:name=".UserListActivity" />
         <activity android:name=".AddUserActivity" />
         <activity android:name=".EmptyListItemActivity" />
-        <activity android:name=".EditUserActivity" />
         <activity android:name=".UserListTopActivity"></activity>
     </application>
 

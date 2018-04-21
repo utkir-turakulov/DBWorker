@@ -2,11 +2,13 @@ package mkdg.com.dbworker;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -22,16 +24,24 @@ public class DatabaseHandler extends SQLiteOpenHelper implements IDatabaseHandle
     private static final String KEY_NAME = "name";
     private static final String KEY_PH_NO = "phone_number";
     final String LOG_TAG = "myLogs";
+    private Context context;
 
 
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        context = context;
     }
 
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
-                " ( '" + KEY_ID + "' INTEGER PRIMARY KEY AUTOINCREMENT, FIO TEXT, DATE_OF_BIRTH TEXT, PLACE TEXT, SEX TEXT ); ");
+    public void onCreate(SQLiteDatabase sqLiteDatabase) throws SQLException{
+        try {
+            sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
+                    " ( '" + KEY_ID + "' INTEGER PRIMARY KEY AUTOINCREMENT, FIO TEXT, DATE_OF_BIRTH TEXT, PLACE TEXT, SEX TEXT ); ");
+        }
+        catch (SQLException ex){
+            Toast.makeText(context, "Не удалось создать таблицу", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override
@@ -43,7 +53,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements IDatabaseHandle
      * Очистить список пользователей
      */
     @Override
-    public void clearUserList() {
+    public void clearUserList() throws SQLException{
         SQLiteDatabase db = this.getWritableDatabase();
         try {
             db.execSQL("DELETE FROM " + TABLE_NAME + ";" + " VACUUM; " + "REINDEX " + DATABASE_NAME + "." + TABLE_NAME + ";");
@@ -60,14 +70,14 @@ public class DatabaseHandler extends SQLiteOpenHelper implements IDatabaseHandle
      * @param user Пользователь которого необходимо добавить
      */
     @Override
-    public void insertUser(User user) {
+    public void insertUser(User user) throws SQLException {
         try {
             SQLiteDatabase db = this.getWritableDatabase();
             Log.d(LOG_TAG, user.getFIO() + "','" + user.getDateOfBirth() + "','" + user.getBirthPlace() + "','" + user.getSex());
             String query = "INSERT INTO " + TABLE_NAME + "( FIO,DATE_OF_BIRTH,PLACE,SEX ) VALUES ('" + user.getFIO() + "','" + user.getDateOfBirth() + "','" + user.getBirthPlace() + "','" + user.getSex() + "');";
             db.execSQL(query);
             db.close();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             Log.d(LOG_TAG, e.toString());
         }
     }
@@ -78,7 +88,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements IDatabaseHandle
      * @return List<User>
      */
     @Override
-    public List<User> getUsers() {
+    public List<User> getUsers() throws SQLException{
         SQLiteDatabase db = this.getReadableDatabase();
         List<User> userList = new ArrayList<>();
         User user;
@@ -137,7 +147,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements IDatabaseHandle
      * @param old_user Старые данные пользователя
      */
     @Override
-    public void editUser(User new_user, User old_user) {
+    public void editUser(User new_user, User old_user) throws SQLException{
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("FIO", new_user.getFIO());
@@ -145,9 +155,12 @@ public class DatabaseHandler extends SQLiteOpenHelper implements IDatabaseHandle
         contentValues.put("PLACE", new_user.getBirthPlace());
         contentValues.put("SEX", new_user.getSex());
 
-        db.update(TABLE_NAME, contentValues, "FIO=? and DATE_OF_BIRTH=? and PLACE=? and SEX=?",
-                new String[]{old_user.getFIO(), old_user.getDateOfBirth(), old_user.getBirthPlace(), old_user.getSex()});
-        db.close();
+        try {
+            db.update(TABLE_NAME, contentValues, "FIO=? and DATE_OF_BIRTH=? and PLACE=? and SEX=?",
+                    new String[]{old_user.getFIO(), old_user.getDateOfBirth(), old_user.getBirthPlace(), old_user.getSex()});
+        }finally {
+            db.close();
+        }
     }
 
     @Override
@@ -160,10 +173,13 @@ public class DatabaseHandler extends SQLiteOpenHelper implements IDatabaseHandle
         contentValues.put("SEX", user.getSex());
         contentValues.put("id", String.valueOf(user.getId()));
         String id = String.valueOf(user.getId());
-        db.delete(TABLE_NAME, "FIO=? and DATE_OF_BIRTH=? and PLACE=? and SEX=? and id=(SELECT MIN(id) FROM " + TABLE_NAME + ")+?",
-                new String[]{user.getFIO(), user.getDateOfBirth(), user.getBirthPlace(), user.getSex(), id});
-
-        db.close();
+        try{
+            db.delete(TABLE_NAME, "FIO=? and DATE_OF_BIRTH=? and PLACE=? and SEX=? and id=(SELECT MIN(id) FROM " + TABLE_NAME + ")+?",
+                    new String[]{user.getFIO(), user.getDateOfBirth(), user.getBirthPlace(), user.getSex(), id});
+        }
+        finally {
+            db.close();
+        }
     }
 
     /**

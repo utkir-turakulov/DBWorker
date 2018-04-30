@@ -1,17 +1,11 @@
 package mkdg.com.dbworker;
 
-import android.annotation.SuppressLint;
-import android.database.sqlite.SQLiteDatabase;
-
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class User {
 
     private String FIO;
-    private Date dateOfBirth;
+    private String dateOfBirth;
     private String birthPlace;
     private String sex = "sex";
     private int id;
@@ -22,9 +16,7 @@ public class User {
 
     public User(String FIO, String dateOfBirth, String birthPlace, String sex) throws ParseException {
         this.FIO = FIO;
-        @SuppressLint("SimpleDateFormat")
-        DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-        this.dateOfBirth = format.parse(dateOfBirth);
+        this.dateOfBirth = dateOfBirth;
         this.birthPlace = birthPlace;
         this.sex = sex;
     }
@@ -38,15 +30,11 @@ public class User {
     }
 
     public void setDateOfBirth(String dateOfBirth) throws ParseException {
-        @SuppressLint("SimpleDateFormat")
-        DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-        this.dateOfBirth = format.parse(dateOfBirth);
+        this.dateOfBirth = dateOfBirth;
     }
 
     public String getDateOfBirth() {
-        @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        return dateFormat.format(dateOfBirth);
+       return  dateOfBirth;
     }
 
     public void setBirthPlace(String birthPlace) {

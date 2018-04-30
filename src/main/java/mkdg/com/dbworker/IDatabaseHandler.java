@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface IDatabaseHandler {
 
-    void insertUser(User user);
+    boolean insertUser(User user);
 
     List<User> getUsers() throws ParseException;
 
-    void editUser(User new_user, User old_user);
+    boolean editUser(User new_user, User old_user);
 
     List<User> sortBy(String filterType) throws ParseException;
 

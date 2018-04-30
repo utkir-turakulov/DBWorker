@@ -14,7 +14,7 @@ public class User {
 
     }
 
-    public User(String FIO, String dateOfBirth, String birthPlace, String sex) throws ParseException {
+    public User(String FIO, String dateOfBirth, String birthPlace, String sex) {
         this.FIO = FIO;
         this.dateOfBirth = dateOfBirth;
         this.birthPlace = birthPlace;
@@ -29,7 +29,7 @@ public class User {
         this.FIO = fio;
     }
 
-    public void setDateOfBirth(String dateOfBirth) throws ParseException {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

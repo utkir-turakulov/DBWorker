@@ -57,11 +57,8 @@ public class AddUserActivity extends Activity implements View.OnClickListener {
         oldUser = new User();
         if (intent != null && intent.getExtras() != null) {
             oldUser.setFIO(intent.getStringExtra("fio"));
-            try {
-                oldUser.setDateOfBirth(intent.getStringExtra("birthDate"));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+
+            oldUser.setDateOfBirth(intent.getStringExtra("birthDate"));
             oldUser.setBirthPlace(intent.getStringExtra("birthPlace"));
             oldUser.setSex(intent.getStringExtra("sex"));
                     /*Заполняем форму*/
@@ -128,12 +125,7 @@ public class AddUserActivity extends Activity implements View.OnClickListener {
         newUser.setFIO(fio.getText().toString());
         newUser.setSex(sex.getText().toString());
         newUser.setBirthPlace(birthPlace.getText().toString());
-        try {
-            newUser.setDateOfBirth(selectedDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
+        newUser.setDateOfBirth(selectedDate);
         if (handler.editUser(newUser, oldUser)) {
             Toast.makeText(getApplicationContext(), "Пользователь изменен!", Toast.LENGTH_SHORT).show();
         } else {
@@ -149,12 +141,7 @@ public class AddUserActivity extends Activity implements View.OnClickListener {
         handler = new DatabaseHandler(getApplicationContext());
         user = new User();
         user.setFIO(fio.getText().toString());
-        try {
-            user.setDateOfBirth(selectedDate);
-        } catch (ParseException e) {
-            e.printStackTrace();//TODO Изменить
-            Toast.makeText(getApplicationContext(), "При сохранении даты произошла ошибка!", Toast.LENGTH_SHORT).show();
-        }
+        user.setDateOfBirth(selectedDate);
         user.setBirthPlace(birthPlace.getText().toString());
         user.setSex(sex.getText().toString());
 

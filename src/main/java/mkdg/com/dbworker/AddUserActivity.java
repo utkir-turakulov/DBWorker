@@ -29,15 +29,12 @@ public class AddUserActivity extends Activity implements View.OnClickListener {
     private EditText birthPlace;
     private EditText sex;
     private Intent intent;
+    private String selectedDate;
     /*Edit data */
     private User oldUser;
-    private Button editUser;
-
-    private DatePicker datePicker;
-    int year ;
-    int month ;
-    int day ;
-
+    int year;
+    int month;
+    int day;
 
 
     @Override
@@ -60,11 +57,8 @@ public class AddUserActivity extends Activity implements View.OnClickListener {
         oldUser = new User();
         if (intent != null && intent.getExtras() != null) {
             oldUser.setFIO(intent.getStringExtra("fio"));
-            try {
-                oldUser.setDateOfBirth(intent.getStringExtra("birthDate"));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+
+            oldUser.setDateOfBirth(intent.getStringExtra("birthDate"));
             oldUser.setBirthPlace(intent.getStringExtra("birthPlace"));
             oldUser.setSex(intent.getStringExtra("sex"));
                     /*Заполняем форму*/
@@ -77,7 +71,6 @@ public class AddUserActivity extends Activity implements View.OnClickListener {
         birthDate.setOnClickListener(this);
 
     }
-
 
 
     @Override
@@ -103,44 +96,39 @@ public class AddUserActivity extends Activity implements View.OnClickListener {
     }
 
 
-   private void showDatePicker(){
+    private void showDatePicker() {
         Calendar calendar = Calendar.getInstance();
-       DatePickerDialog dialog = new DatePickerDialog(this, onDataSet(),
-               calendar.get(Calendar.YEAR),
-               calendar.get(Calendar.MONTH),
-               calendar.get(Calendar.DAY_OF_MONTH));
-       dialog.show();
-   }
+        DatePickerDialog dialog = new DatePickerDialog(this, onDataSet(),
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH));
+        dialog.show();
+    }
 
-   private DatePickerDialog.OnDateSetListener onDataSet (){
-       return new DatePickerDialog.OnDateSetListener() {
-           @SuppressLint("SetTextI18n")
-           @Override
-           public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-            Calendar calendar = new GregorianCalendar(year,month,dayOfMonth);
-               SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-               Date date = calendar.getTime();
-               birthDate.setText(format.format(date));
-           }
-       };
-   }
+    private DatePickerDialog.OnDateSetListener onDataSet() {
+        return new DatePickerDialog.OnDateSetListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                Calendar calendar = new GregorianCalendar(year, month, dayOfMonth);
+                SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+                Date date = calendar.getTime();
+                selectedDate = format.format(date);
+                birthDate.setText(selectedDate);
+            }
+        };
+    }
 
-    public void editUserData(){
+    public void editUserData() {
         handler = new DatabaseHandler(getApplicationContext());
         User newUser = new User();
         newUser.setFIO(fio.getText().toString());
         newUser.setSex(sex.getText().toString());
         newUser.setBirthPlace(birthPlace.getText().toString());
-        try {
-            newUser.setDateOfBirth(birthDate.getText().toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            handler.editUser(newUser,oldUser);
+        newUser.setDateOfBirth(selectedDate);
+        if (handler.editUser(newUser, oldUser)) {
             Toast.makeText(getApplicationContext(), "Пользователь изменен!", Toast.LENGTH_SHORT).show();
-        }catch (SQLException ex){
+        } else {
             Toast.makeText(getApplicationContext(), "Пользователь не изменен!", Toast.LENGTH_SHORT).show();
         }
         fio.setText("");
@@ -149,23 +137,17 @@ public class AddUserActivity extends Activity implements View.OnClickListener {
         sex.setText("");
     }
 
-    public void addUser(){
+    public void addUser() {
         handler = new DatabaseHandler(getApplicationContext());
         user = new User();
         user.setFIO(fio.getText().toString());
-        try {
-            user.setDateOfBirth(birthDate.getText().toString());
-        } catch (ParseException e) {
-            e.printStackTrace();//TODO Изменить
-            Toast.makeText(getApplicationContext(), "При сохранении даты произошла ошибка!", Toast.LENGTH_SHORT).show();
-        }
+        user.setDateOfBirth(selectedDate);
         user.setBirthPlace(birthPlace.getText().toString());
         user.setSex(sex.getText().toString());
 
-        try{
-            handler.insertUser(user);
+        if (handler.insertUser(user)) {
             Toast.makeText(getApplicationContext(), "Пользователь сохранен!", Toast.LENGTH_SHORT).show();
-        }catch (SQLException ex){
+        } else {
             Toast.makeText(getApplicationContext(), "Пользователь не сохранен!", Toast.LENGTH_SHORT).show();
         }
 
